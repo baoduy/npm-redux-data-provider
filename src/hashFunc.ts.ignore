@@ -1,0 +1,11 @@
+import { sha1 } from 'object-hash';
+
+/** Cache Key hasing */
+// export const hashFunc = (...args: Array<any>): string =>
+//   args.reduce((acc, val) => acc + '-' + JSON.stringify(val), '');
+
+export const hashFunc = (...args: Array<any>): string =>
+  args.reduce(
+    (acc: string, val: any) => acc + '-' + (val ? sha1(val) : ''),
+    ''
+  );

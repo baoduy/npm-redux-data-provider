@@ -1,0 +1,78 @@
+{
+  "name": "redux-data-provider",
+  "version": "1.0.0",
+  "description": "The Hooks and HOC provider for React Components to extract the data from Redux Store.",
+  "main": "src/index.tsx",
+  "scripts": {
+    "test": "jest --watch --coverage --config=configs/jest/ts.jest.json",
+    "test-ci": "npm-run-all git:jest && jest --ci --coverage --config=configs/jest/ts.jest.json && codecov",
+    "ci-publish": "ci-publish",
+    "cost": "cost-of-modules --no-install",
+    "update": "ncu -u && npm install",
+    "update-g": "ncu -u -a -g",
+    "start": "docz dev",
+    "build-doc": "docz build",
+    "clean": "rimraf -f -rmdir lib",
+    "build-types": "tsc",
+    "build-js": "babel src --out-dir lib --extensions \".ts,.tsx\"",
+    "build": "npm-run-all clean build-types build-js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baoduy/redux-data-provider.git"
+  },
+  "keywords": [
+    "redux",
+    "redux-store"
+  ],
+  "author": "Duy Hoang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/baoduy/redux-data-provider/issues"
+  },
+  "homepage": "https://github.com/baoduy/redux-data-provider#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.4.5",
+    "react": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.1",
+    "redux-toolbelt-immutable-helpers": "^1.1.9",
+    "reselect": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-jsx": "^7.2.0",
+    "@babel/plugin-transform-react-display-name": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/enzyme": "^3.9.3",
+    "@types/react": "^16.8.19",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^24.8.0",
+    "babel-plugin-lodash": "^3.3.4",
+    "babel-preset-env": "^1.7.0",
+    "enzyme": "^3.10.0",
+    "jest": "^24.8.0",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
+  },
+  "jest": {
+    "coverageDirectory": "<rootDir>/tests/__coverage__/",
+    "collectCoverage": true
+  },
+  "bundlesize": [
+    {
+      "path": "./build/*.*",
+      "compression": "gzip",
+      "maxSize": "150 kB"
+    },
+    {
+      "path": "./build/*.*",
+      "compression": "none",
+      "maxSize": "500 kB"
+    }
+  ]
+}
