@@ -4,7 +4,7 @@ import {
   IdFunc,
   RdpDataItem,
   RdpStoreItem
-} from './rdpDefinition';
+} from './rdpDefinitions';
 
 import filterByIds from 'redux-toolbelt-immutable-helpers/lib/filterByIds';
 import { getIds } from './getIds';

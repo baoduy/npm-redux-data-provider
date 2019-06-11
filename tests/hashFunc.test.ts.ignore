@@ -1,4 +1,4 @@
-import { hashFunc } from '../../src/redux-data-provider/hashFunc';
+import { hashFunc } from '../src/hashFunc';
 
 test(`Test ${hashFunc.name} with normal objects`, () => {
   const obj1 = { id: 1, name: 'Duy' };

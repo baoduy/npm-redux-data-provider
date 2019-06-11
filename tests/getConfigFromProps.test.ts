@@ -1,5 +1,5 @@
-import { RdpProps } from '../../src/redux-data-provider/RdpDefinition';
-import { getConfigFromProps } from '../../src/redux-data-provider/getConfigFromProps';
+import { RdpProps } from '../src/rdpDefinitions';
+import { getConfigFromProps } from '../src/getConfigFromProps';
 
 test(`Test ${
   getConfigFromProps.name

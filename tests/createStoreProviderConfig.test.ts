@@ -1,4 +1,4 @@
-import { createStoreProviderConfig } from '../../src/redux-data-provider/createStoreProviderConfig';
+import { createStoreProviderConfig } from '../src/createStoreProviderConfig';
 
 test(`Test ${createStoreProviderConfig.name}`, () => {
   const state = {

@@ -1,15 +1,12 @@
-import {
-  IdFunc,
-  RdpProps,
-  RdpStoreItem
-} from '../../src/redux-data-provider/RdpDefinition';
+import { IdFunc, RdpProps, RdpStoreItem } from '../src/rdpDefinitions';
 
-import { getActionsForConfig } from '../../src/redux-data-provider/getActionsForConfig';
-import { getConfigFromProps } from '../../src/redux-data-provider/getConfigFromProps';
-import { getIds } from '../../src/redux-data-provider/getIds';
-import { getItemsFromStore } from '../../src/redux-data-provider/getItemsFromStore';
-import { getSlotFromStore } from '../../src/redux-data-provider/createStoreSelectorForConfig';
-import { hashFunc } from '../../src/redux-data-provider/hashFunc';
+import { getActionsForConfig } from '../src/getActionsForConfig';
+import { getConfigFromProps } from '../src/getConfigFromProps';
+import { getIds } from '../src/getIds';
+import { getItemsFromStore } from '../src/getItemsFromStore';
+import { getSlotFromStore } from '../src/createStoreSelectorForConfig';
+
+//import { hashFunc } from '../src/hashFunc';
 
 describe('Test Helper', () => {
   test('Test getIds', () => {
@@ -23,12 +20,12 @@ describe('Test Helper', () => {
     ]);
 
     expect(
-      getIds((_p, s: any) => s.id, { id: [1, 2] }, { id: [2, 3] })
+      getIds((_p, s: any) => s.id, { id: [1, 2] }, [1, 2, 3])
     ).toMatchObject([2, 3]);
   });
 
   test(`Test ${getItemsFromStore.name} with empty slot`, () => {
-    const result = getItemsFromStore('name', { name: null }, {});
+    const result = getItemsFromStore('name', { name: null }, { data: {} });
     expect(result).toBeUndefined();
   });
 
@@ -66,7 +63,6 @@ describe('Test Helper', () => {
 
   test('Test getConfigFromProps', () => {
     const props: RdpProps<any> = {
-      maxDataLoadingCall: 1,
       config: {
         //Load All Customer
         customer: { required: false },
@@ -88,7 +84,6 @@ describe('Test Helper', () => {
     getConfigFromProps.name
   } for the Props twice, they are should be the same`, () => {
     const props: RdpProps<any> = {
-      maxDataLoadingCall: 1,
       config: {
         //Load All Customer
         customer: { required: false }, //Load vendor 1
@@ -106,7 +101,6 @@ describe('Test Helper', () => {
   test(`Test ${getConfigFromProps.name} with Store`, () => {
     const func = jest.fn();
     const props: RdpProps<any> = {
-      maxDataLoadingCall: 1,
       config: {
         //Load All Customer
         customer: { required: false },
@@ -149,7 +143,6 @@ describe('Test Helper', () => {
     getActionsForConfig.name
   } for the Props twice, they are should be the same`, () => {
     const props: RdpProps<any> = {
-      maxDataLoadingCall: 1,
       config: {
         //Load All Customer
         customer: { required: false }, //Load vendor 1
@@ -172,32 +165,16 @@ describe('Test Helper', () => {
   test(`Test ${getActionsForConfig.name} with allActions`, () => {
     const result = getActionsForConfig(
       { customer: {} },
+
       {
-        actions: {
-          customer: {
-            get: () => {},
-            getById: () => {}
-          }
+        customer: {
+          get: () => Promise.resolve(),
+          getById: (id: any) => Promise.resolve(id)
         }
       }
     );
 
     expect(result.customer.get).toBeInstanceOf(Function);
     expect(result.customer.getById).toBeInstanceOf(Function);
-  });
-
-  test('Test HashFunc for the 2 config, they are should be difference', () => {
-    const config1 = {
-      customer: { id: 1 }
-    };
-
-    const config2 = {
-      customer: { id: 2 }
-    };
-
-    const h1 = hashFunc(config1);
-    const h2 = hashFunc(config2);
-
-    expect(h1).not.toBe(h2);
   });
 });

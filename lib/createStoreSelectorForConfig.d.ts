@@ -1,4 +1,4 @@
-import { RdpStoreItem } from './rdpDefinition';
+import { RdpStoreItem } from './rdpDefinitions';
 /**
  * @description Get Data Slot in Redux Store by name
  * @template TStore

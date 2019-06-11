@@ -1,4 +1,4 @@
-import { RdpConfig, RdpProps } from './rdpDefinition';
+import { RdpConfig, RdpProps } from './rdpDefinitions';
 export declare const RdpMapStateToProps: <TConfig extends RdpConfig, TStore>(state: TStore, props: RdpProps<TConfig>) => {
     data?: undefined;
     config?: undefined;

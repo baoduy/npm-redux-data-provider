@@ -1,4 +1,4 @@
-import { Id, RdpConfigItem, RdpFinalConfig, RdpProps } from './rdpDefinition';
+import { Id, RdpConfigItem, RdpFinalConfig, RdpProps } from './rdpDefinitions';
 
 import { getActionsForConfig } from './getActionsForConfig';
 import { validateDataItem } from './validateData';

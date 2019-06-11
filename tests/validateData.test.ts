@@ -1,5 +1,5 @@
-import { RdpConfig } from '../../src/redux-data-provider/RdpDefinition';
-import { validateData } from '../../src/redux-data-provider/validateData';
+import { RdpConfig } from '../src/rdpDefinitions';
+import { validateData } from '../src/validateData';
 
 test(`Test validateData`, () => {
   const config: RdpConfig = {

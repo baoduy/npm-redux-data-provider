@@ -1,4 +1,4 @@
-import { DataItem, RdpConfig, RdpConfigItem, RdpData, RdpDataItem } from './rdpDefinition';
+import { DataItem, RdpConfig, RdpConfigItem, RdpData, RdpDataItem } from './rdpDefinitions';
 export declare const validateDataItem: <T extends DataItem>(dataItem: RdpDataItem<T, any>, configItem: RdpConfigItem) => boolean;
 /**
  * @description Validate Data whether all required of config or not.

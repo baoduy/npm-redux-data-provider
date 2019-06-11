@@ -1,4 +1,4 @@
-import { RdpActionCollection, RdpActions, RdpFinalConfig } from './rdpDefinition';
+import { RdpActionCollection, RdpActions, RdpFinalConfig } from './rdpDefinitions';
 /**
  * @description Get Actions for config.
  *  If the actions are not provided in config the it will be lookup in allActions based on config property name

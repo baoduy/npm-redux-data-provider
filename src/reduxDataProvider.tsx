@@ -1,7 +1,10 @@
 import * as React from 'react';
 
-import { RdpFinalConfig, RdpProps } from './rdpDefinition';
-import { RdpMapDispatchToProps, RdpMapStateToProps } from './RdpMapToProps';
+import { RdpFinalConfig, RdpProps } from './rdpDefinitions';
+import {
+  RdpMapDispatchToProps,
+  RdpMapStateToProps
+} from './rdpMapStateToProps';
 
 import { connect } from 'react-redux';
 import { loadNotFoundData } from './loadNotFoundData';

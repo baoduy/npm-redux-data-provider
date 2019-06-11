@@ -2,10 +2,11 @@
   "name": "redux-data-provider",
   "version": "1.0.0",
   "description": "The Hooks and HOC provider for React Components to extract the data from Redux Store.",
-  "main": "src/index.tsx",
+  "main": "lib/index.js",
   "scripts": {
     "test": "jest --watch --coverage --config=configs/jest/ts.jest.json",
     "test-ci": "npm-run-all git:jest && jest --ci --coverage --config=configs/jest/ts.jest.json && codecov",
+    "test-bundle": "bundlesize",
     "ci-publish": "ci-publish",
     "cost": "cost-of-modules --no-install",
     "update": "ncu -u && npm install",
@@ -49,13 +50,16 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-typescript": "^7.3.3",
     "@types/enzyme": "^3.9.3",
+    "@types/jest": "^24.0.13",
     "@types/react": "^16.8.19",
     "@types/react-redux": "^7.0.9",
     "babel-core": "^6.26.3",
     "babel-jest": "^24.8.0",
     "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "babel-plugin-typescript-to-proptypes": "^0.17.1",
     "babel-preset-env": "^1.7.0",
+    "bundlesize": "^0.17.2",
     "docz": "^1.2.0",
     "docz-theme-default": "^1.2.0",
     "enzyme": "^3.10.0",
@@ -70,14 +74,14 @@
   },
   "bundlesize": [
     {
-      "path": "./build/*.*",
+      "path": "./lib/*.*",
       "compression": "gzip",
-      "maxSize": "150 kB"
+      "maxSize": "1.5 kB"
     },
     {
-      "path": "./build/*.*",
+      "path": "./lib/*.*",
       "compression": "none",
-      "maxSize": "500 kB"
+      "maxSize": "50 kB"
     }
   ]
 }

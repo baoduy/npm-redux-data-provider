@@ -2,7 +2,7 @@ import {
   RdpActionCollection,
   RdpActions,
   RdpFinalConfig
-} from './rdpDefinition';
+} from './rdpDefinitions';
 
 /**
  * @description Get Actions for config.

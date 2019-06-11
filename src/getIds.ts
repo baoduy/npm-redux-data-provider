@@ -1,4 +1,4 @@
-import { Id, IdFunc, RdpStoreItem } from './rdpDefinition';
+import { Id, IdFunc, RdpStoreItem } from './rdpDefinitions';
 
 /**
  * @description Load original Id if input is Function.

@@ -1,4 +1,4 @@
-import { RdpConfig, RdpConfigItem, RdpProps } from './rdpDefinition';
+import { RdpConfig, RdpConfigItem, RdpProps } from './rdpDefinitions';
 
 import { bindActionCreators } from 'redux';
 import { createStoreProviderConfig } from './createStoreProviderConfig';

@@ -1,4 +1,4 @@
-import { RdpActions, RdpConfig } from './rdpDefinition';
+import { RdpActions, RdpConfig } from './rdpDefinitions';
 
 import React from 'react';
 import ReduxDataProvider from './reduxDataProvider';

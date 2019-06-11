@@ -19,6 +19,7 @@
     "@babel/plugin-transform-react-jsx",
     "@babel/plugin-transform-react-display-name",
     "@babel/plugin-syntax-dynamic-import",
+    "transform-remove-console",
     //"@babel/plugin-syntax-import-meta",
     // [
     //   "@babel/plugin-proposal-decorators",
@@ -55,9 +56,6 @@
     "babel-plugin-lodash"
   ],
   "env": {
-    "production": {
-      "plugins": ["transform-remove-console"]
-    },
     "development": {
       "plugins": ["babel-plugin-typescript-to-proptypes"]
     }

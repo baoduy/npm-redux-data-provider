@@ -1,4 +1,4 @@
-import { DataItem, Id, IdFunc } from './rdpDefinition';
+import { DataItem, Id, IdFunc } from './rdpDefinitions';
 /**
  * @description Get item by Id in Redux Store
  * @template TStore
@@ -8,4 +8,4 @@ import { DataItem, Id, IdFunc } from './rdpDefinition';
  * @param {(Id | Array<Id>)} [id]
  * @returns {ItemResult}
  */
-export declare const getItemsFromStore: <T extends DataItem>(id?: string | number | Id[] | IdFunc | undefined, props?: any, slot?: T[] | import("./rdpDefinition").RdpStoreDataItem<T> | undefined) => import("./rdpDefinition").RdpSingleData<T, any> | import("./rdpDefinition").RdpArrayData<T, any> | undefined;
+export declare const getItemsFromStore: <T extends DataItem>(id?: string | number | Id[] | IdFunc | undefined, props?: any, slot?: T[] | import("./rdpDefinitions").RdpStoreDataItem<T> | undefined) => import("./rdpDefinitions").RdpSingleData<T, any> | import("./rdpDefinitions").RdpArrayData<T, any> | undefined;
