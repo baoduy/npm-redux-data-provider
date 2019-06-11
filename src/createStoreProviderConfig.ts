@@ -6,7 +6,7 @@ import {
   RdpData,
   RdpProps,
   RdpStoreItem
-} from './RdpDefinition';
+} from './rdpDefinition';
 
 import { createSelector } from 'reselect';
 import { createStoreSelectorForConfig } from './createStoreSelectorForConfig';

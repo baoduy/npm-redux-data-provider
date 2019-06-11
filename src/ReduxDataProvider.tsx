@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { RdpFinalConfig, RdpProps } from './RdpDefinition';
+import { RdpFinalConfig, RdpProps } from './rdpDefinition';
 import { RdpMapDispatchToProps, RdpMapStateToProps } from './RdpMapToProps';
 
 import { connect } from 'react-redux';
 import { loadNotFoundData } from './loadNotFoundData';
-import { render } from '@src/react-universal-interface';
+import { render } from 'react-universal-interface';
 import { validateData } from './validateData';
 
 /**

@@ -2,11 +2,11 @@ import {
   RdpActionCollection,
   RdpActions,
   RdpFinalConfig
-} from './RdpDefinition';
+} from './rdpDefinition';
 
 /**
  * @description Get Actions for config.
- *  If the actions are not provided in config the it willbe lookup in allActions based on config property name
+ *  If the actions are not provided in config the it will be lookup in allActions based on config property name
  *  const actions = config[k].actions || allActions[`${k}Actions`];
  * @param config the RdpConfig
  * @param allActions all available actions which providing by ErpConnect

@@ -3,7 +3,7 @@ import {
   RdpConfigItem,
   RdpFinalConfig,
   RdpProps
-} from './RdpDefinition';
+} from './rdpDefinition';
 
 import { createStoreSelectorForConfig } from './createStoreSelectorForConfig';
 import { getIds } from './getIds';

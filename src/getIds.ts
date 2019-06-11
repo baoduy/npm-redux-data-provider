@@ -1,10 +1,10 @@
-import { Id, IdFunc, RdpStoreItem } from './RdpDefinition';
+import { Id, IdFunc, RdpStoreItem } from './rdpDefinition';
 
 /**
- * @description Load origian Id if input is Function.
+ * @description Load original Id if input is Function.
  * @param {(Id | Array<Id> | IdFunc)} id
  * @param {*} props
- * @returns {(Id | Array<Id>)} Shoud be Id or Array of Id
+ * @returns {(Id | Array<Id>)} Should be Id or Array of Id
  */
 export const getIds = <T>(
   id: Id | Array<Id> | IdFunc,

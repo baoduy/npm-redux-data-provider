@@ -1,5 +1,5 @@
 import { ActionCreator } from 'redux';
-import { UniversalProps } from '@src/react-universal-interface';
+import { UniversalProps } from 'react-universal-interface';
 
 export type Id = number | string;
 

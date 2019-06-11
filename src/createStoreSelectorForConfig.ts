@@ -1,8 +1,4 @@
-import {
-  RdpConfigStore,
-  RdpFinalConfig,
-  RdpStoreItem
-} from './RdpDefinition';
+import { RdpConfigStore, RdpFinalConfig, RdpStoreItem } from './rdpDefinition';
 
 import memoize from 'lodash/memoize';
 

@@ -1,7 +1,7 @@
-import { RdpActions, RdpConfig } from './RdpDefinition';
+import { RdpActions, RdpConfig } from './rdpDefinition';
 
 import React from 'react';
-import ReduxDataProvider from './ReduxDataProvider';
+import ReduxDataProvider from './reduxDataProvider';
 
 /**
  * The HOC for ReduxDataProvider
