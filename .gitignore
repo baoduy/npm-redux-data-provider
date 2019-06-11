@@ -330,3 +330,4 @@ ASALocalRun/
 .mfractor/
 tests/__coverage__/
 package-lock.json
+lib/
