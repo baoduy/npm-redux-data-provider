@@ -1,6 +1,6 @@
 {
   "name": "redux-data-provider",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "The Hooks and HOC provider for React Components to extract the data from Redux Store.",
   "main": "lib/index.js",
   "scripts": {
