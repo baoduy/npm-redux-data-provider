@@ -8,7 +8,7 @@ describe('Test Helper', () => {
 
   test('Test getIds from props', () => {
     expect(getIds(() => 1, null, null)).toBe(1);
-    expect(getIds((p: any) => p.id, { id: [1, 2] }, null)).toMatchObject([
+    expect(getIds((p: any) => p.id, { id: [1, 2] }, undefined)).toMatchObject([
       1,
       2
     ]);
