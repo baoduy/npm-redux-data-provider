@@ -5,7 +5,7 @@ import {
   RdpConfigItem,
   RdpData,
   RdpDataItem
-} from './rdpDefinitions';
+} from './RdpDefinition';
 
 import isEmpty from 'lodash/isEmpty';
 

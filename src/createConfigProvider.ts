@@ -1,48 +1,34 @@
 import {
-  MetaDataFunc,
   RdpConfig,
   RdpConfigItem,
   RdpConfigStore,
   RdpData,
-  RdpProps,
   RdpStoreItem
-} from './rdpDefinitions';
+} from './RdpDefinition';
 
+import createConfigSelector from './createConfigSelector';
 import { createSelector } from 'reselect';
-import { createStoreSelectorForConfig } from './createStoreSelectorForConfig';
-import { getItemsFromStore } from './getItemsFromStore';
+import getItemsFromStore from './getItemsFromStore';
+import getMetaData from './getMetaData';
 import memoize from 'lodash/memoize';
 
-const defaultMetaDataFunc = <T>(slot: RdpStoreItem<T>) => {
-  if (Array.isArray(slot)) return undefined;
+export const defaultMetaDataFunc = <T>(slot?: RdpStoreItem<T>) => {
+  if (!slot || Array.isArray(slot)) return undefined;
   const finalSlot = slot.data || slot;
   const { items, ...rest } = finalSlot;
   return rest;
 };
 
-const getMetaData = <T>(
-  meta?: boolean | MetaDataFunc,
-  slot?: RdpStoreItem<T>
-) => {
-  if (!meta) return undefined;
-
-  const func = (meta === true ? defaultMetaDataFunc : meta) as MetaDataFunc;
-  return typeof func === 'function' ? func(slot) : undefined;
-};
-
 /**
- * get Store provider for cconfig,
+ * get Store provider for config,
  * the provider should be the same for a config. so this func will be memoize
  * @param config
  * @param props
  */
-export const createStoreProviderConfig = memoize(
-  <TConfig extends RdpConfig>(
-    config: TConfig,
-    props?: RdpProps<TConfig> | undefined
-  ) => {
-    const selector = createStoreSelectorForConfig(config);
-    if (!selector) return undefined;
+export default memoize(
+  <TConfig extends RdpConfig>(config: TConfig, props?: any) => {
+    const selector = createConfigSelector(config);
+    if (!selector) return () => ({});
 
     return createSelector(
       [selector as any],

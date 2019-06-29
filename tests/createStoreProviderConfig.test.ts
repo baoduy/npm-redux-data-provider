@@ -1,11 +1,11 @@
-import { createStoreProviderConfig } from '../src/createStoreProviderConfig';
+import createConfigProvider from '../src/createConfigProvider';
 
-test(`Test ${createStoreProviderConfig.name}`, () => {
+test('Test createConfigProvider', () => {
   const state = {
     customer: {
       data: { items: [{ id: 1, name: 'C123' }, { id: 2, name: 'C123' }] }
     },
-    verndor: {
+    vendor: {
       data: { items: [{ id: 1, name: 'V123' }, { id: 2, name: 'V123' }] }
     },
     product: [
@@ -21,28 +21,28 @@ test(`Test ${createStoreProviderConfig.name}`, () => {
   const props = {
     config: {
       //Load All Customer
-      customer: { metaData: () => ({ a: 1, b: 1 }) },
-      verndor: { id: 1 },
-      product: { id: () => [1, 2], metaData: true },
+      customer: { meta: () => ({ a: 1, b: 1 }) },
+      vendor: { id: 1 },
+      product: { id: () => [1, 2], meta: true },
       displayInfo: {}
     }
   }; //Load vendor 1 //Load product 1,2
 
-  const provider = createStoreProviderConfig(props.config, props);
+  const provider = createConfigProvider(props.config, props);
   const result = provider(state);
 
   expect(result.customer).toHaveLength(2);
-  expect(result.customer.metaData).toBeDefined();
+  expect(result.customer.meta).toBeDefined();
 
-  expect(result.verndor).toBeDefined();
+  expect(result.vendor).toBeDefined();
 
   expect(result.product).toHaveLength(2);
-  expect(result.product.metaData).toBeUndefined();
+  expect(result.product.meta).toBeUndefined();
 
   expect(result.displayInfo).toMatchObject(state.displayInfo.data);
 });
 
-test(`Test ${createStoreProviderConfig.name} with metaData for Object`, () => {
+test('Test createConfigProvider with meta for Object', () => {
   const state = {
     customer: {
       data: {
@@ -55,22 +55,22 @@ test(`Test ${createStoreProviderConfig.name} with metaData for Object`, () => {
 
   const props = {
     config: {
-      customer: { id: 1, metaData: true }
+      customer: { id: 1, meta: true }
     }
   };
 
-  const provider = createStoreProviderConfig(props.config, props);
+  const provider = createConfigProvider(props.config, props);
   const result = provider(state);
 
   expect(result.customer).toBeDefined();
-  expect(result.customer.metaData).toBeDefined();
+  expect(result.customer.meta).toBeDefined();
 
-  expect(result.customer.metaData.editId).toBe(1);
-  expect(result.customer.metaData.loading).toBeDefined();
-  expect(result.customer.metaData.items).toBeUndefined();
+  expect(result.customer.meta.editId).toBe(1);
+  expect(result.customer.meta.loading).toBeDefined();
+  expect(result.customer.meta.items).toBeUndefined();
 });
 
-test(`Test ${createStoreProviderConfig.name} with metaData for Array`, () => {
+test('Test createConfigProvider with meta for Array', () => {
   const state = {
     customer: {
       data: {
@@ -83,20 +83,15 @@ test(`Test ${createStoreProviderConfig.name} with metaData for Array`, () => {
 
   const props = {
     config: {
-      customer: { metaData: true }
+      customer: { meta: true }
     }
   };
 
-  const provider = createStoreProviderConfig(props.config, props);
+  const provider = createConfigProvider(props.config, props);
   const result = provider(state);
 
   expect(result.customer).toHaveLength(2);
-  expect(result.customer.metaData.editId).toBe(1);
-  expect(result.customer.metaData.loading).toBeDefined();
-  expect(result.customer.metaData.items).toBeUndefined();
-});
-
-test(`Test ${createStoreProviderConfig.name} with undefined config`, () => {
-  const provider = createStoreProviderConfig(null, null);
-  expect(provider).not.toBeDefined();
+  expect(result.customer.meta.editId).toBe(1);
+  expect(result.customer.meta.loading).toBeDefined();
+  expect(result.customer.meta.items).toBeUndefined();
 });

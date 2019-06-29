@@ -1,14 +1,7 @@
 {
   "presets": ["@babel/env", "@babel/preset-typescript", "@babel/react"],
   "plugins": [
-    [
-      "@babel/plugin-transform-runtime",
-      {
-        "helpers": true,
-        "regenerator": true,
-        "useESModules": false
-      }
-    ],
+    "@babel/plugin-transform-runtime",
     // [
     //   "babel-plugin-optimize-clsx",
     //   {
@@ -54,10 +47,5 @@
     //   "material-icon"
     // ],
     "babel-plugin-lodash"
-  ],
-  "env": {
-    "development": {
-      "plugins": ["babel-plugin-typescript-to-proptypes"]
-    }
-  }
+  ]
 }

@@ -1,4 +1,5 @@
-import { ActionCreator } from 'redux';
+import { ActionCreator, ActionCreatorsMapObject } from 'redux';
+
 import { UniversalProps } from 'react-universal-interface';
 
 export type Id = number | string;
@@ -27,9 +28,13 @@ export type ValidateFunc = <T extends RdpDataItem>(item: T) => boolean;
 
 export type MetaDataFunc = <T>(slot?: RdpStoreItem<T>) => any;
 
-export type IdFunc = (props: RdpProps, slot?: RdpStoreItem) => Id | Array<Id>;
+export type IdFunc = <TConfig extends RdpConfig>(
+  props: RdpProps<TConfig>,
+  slot?: RdpStoreItem
+) => Id | Array<Id>;
 
-export interface RdpActions<A = any> {
+export interface RdpActions<A = any>
+  extends Partial<ActionCreatorsMapObject<A>> {
   get: ActionCreator<A>;
   getById?: ActionCreator<A>;
   [key: string]: ActionCreator<A> | undefined;
@@ -41,7 +46,11 @@ export type RdpStoreDataItem<T> = {
 
 export type RdpStoreItem<T = any> = Array<T> | RdpStoreDataItem<T>;
 
-export type RdpActionCollection<TConfig extends RdpConfig> = {
+export type RequiredRdpActionsCollection<TConfig extends RdpConfig> = {
+  [K in keyof TConfig]: RdpActions
+};
+
+export type RdpActionsCollection<TConfig extends RdpConfig> = {
   [K in keyof TConfig]: RdpActions | undefined
 };
 
@@ -88,8 +97,8 @@ export type RdpConfig = {
 };
 
 /**
- * @description Each RdpData is the result of a RdpCopnfig so the number of prtoperties should be the same with config.
- * @author (Set the text for this tag by adding docthis.authorName to your settings file.)
+ * @description Each RdpData is the result of a RdpConfig so the number of properties should be the same with config.
+ * @author (Set the text for this tag by adding authorName to your settings file.)
  * @export
  * @interface RdpData
  * @template TData
@@ -97,19 +106,20 @@ export type RdpConfig = {
 export type RdpData<TConfig extends RdpConfig> = {
   [K in keyof TConfig]: RdpDataItem
 };
+
 /**
  * @description The Data props of ReduxDataProvider which will be passed to the child Component
- * @author (Set the text for this tag by adding docthis.authorName to your settings file.)
+ * @author (Set the text for this tag by adding authorName to your settings file.)
  * @export
  * @interface RdpDataProps
  */
-export interface RdpDataProps<TConfig extends RdpConfig> {
-  loading: boolean;
-  isValid: boolean;
-  error: any;
-  actions: RdpActionCollection<TConfig>;
-  [key: string]: RdpDataItem;
-}
+
+export type RdpDataProps<TConfig extends RdpConfig> = {
+  loading?: boolean;
+  error?: any;
+  actions?: RequiredRdpActionsCollection<TConfig>;
+} & { [k in keyof TConfig]: RdpDataItem };
+
 /**
  * @description The props definition of ReduxDataProvider
  * @author (Set the text for this tag by adding authorName to your settings file.)
@@ -118,26 +128,11 @@ export interface RdpDataProps<TConfig extends RdpConfig> {
  * @extends {UniversalProps<RdpState<TConfig>>}
  * @template TConfig
  */
-export interface RdpProps<TConfig extends RdpConfig = any>
+export interface RdpProps<TConfig extends RdpConfig>
   extends UniversalProps<RdpDataProps<TConfig>> {
-  disabled?: boolean;
+  disableRdp?: (() => boolean) | boolean;
   config?: TConfig;
   data?: RdpData<TConfig>;
-  actions?: RdpActions;
+  actions?: RdpActionsCollection<TConfig>;
   Loading?: React.ComponentType;
-  mapActionToDispatch?: boolean;
-  children?: React.ReactChild;
 }
-
-// /**
-//  * @description The State definition of ReduxDataProvider
-//  * @author (Set the text for this tag by adding docthis.authorName to your settings file.)
-//  * @export
-//  * @interface RdpState
-//  * @template TConfig
-//  */
-// export interface RdpState<TConfig extends RdpConfig = any> {
-//   error?: object;
-//   dataLoaded: boolean;
-//   config?: TConfig;
-// }

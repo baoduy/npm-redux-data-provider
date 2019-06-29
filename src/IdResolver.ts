@@ -1,12 +1,12 @@
-import { Id, IdFunc, RdpStoreItem } from './rdpDefinitions';
+import { Id, IdFunc, RdpStoreItem } from './RdpDefinition';
 
 /**
- * @description Load original Id if input is Function.
+ * @description Resolve Id .
  * @param {(Id | Array<Id> | IdFunc)} id
  * @param {*} props
  * @returns {(Id | Array<Id>)} Should be Id or Array of Id
  */
-export const getIds = <T>(
+export default <T>(
   id: Id | Array<Id> | IdFunc,
   props?: any,
   slot?: RdpStoreItem<T>

@@ -15,8 +15,11 @@
     "build-doc": "docz build",
     "clean": "rimraf -f -rmdir lib",
     "build-types": "tsc",
-    "build-js": "babel src --out-dir lib --extensions \".ts,.tsx\"",
-    "build": "npm-run-all clean build-types build-js"
+    "build-js": "babel src --out-dir lib --extensions \".ts,.tsx\" --envName production",
+    "build": "npm-run-all clean build-types build-js",
+    "doc": "docz dev",
+    "doc-build": "docz build",
+    "test-ui": "majestic"
   },
   "repository": {
     "type": "git",
@@ -49,15 +52,14 @@
     "@babel/plugin-transform-react-display-name": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-typescript": "^7.3.3",
-    "@types/enzyme": "^3.9.3",
-    "@types/jest": "^24.0.13",
-    "@types/react": "^16.8.19",
-    "@types/react-redux": "^7.0.9",
+    "@types/enzyme": "^3.9.4",
+    "@types/jest": "^24.0.15",
+    "@types/react": "^16.8.22",
+    "@types/react-redux": "^7.1.1",
     "babel-core": "^6.26.3",
     "babel-jest": "^24.8.0",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-transform-remove-console": "^6.9.4",
-    "babel-plugin-typescript-to-proptypes": "^0.17.1",
     "babel-preset-env": "^1.7.0",
     "bundlesize": "^0.17.2",
     "docz": "^1.2.0",
@@ -66,7 +68,7 @@
     "jest": "^24.8.0",
     "npm-run-all": "^4.1.5",
     "ts-jest": "^24.0.2",
-    "typescript": "^3.5.1"
+    "typescript": "^3.5.2"
   },
   "jest": {
     "coverageDirectory": "<rootDir>/tests/__coverage__/",

@@ -4,10 +4,10 @@ import {
   IdFunc,
   RdpDataItem,
   RdpStoreItem
-} from './rdpDefinitions';
+} from './RdpDefinition';
 
 import filterByIds from 'redux-toolbelt-immutable-helpers/lib/filterByIds';
-import { getIds } from './getIds';
+import getIds from './IdResolver';
 
 /**
  * @description Get item by Id in Redux Store
@@ -18,7 +18,7 @@ import { getIds } from './getIds';
  * @param {(Id | Array<Id>)} [id]
  * @returns {ItemResult}
  */
-export const getItemsFromStore = <T extends DataItem>(
+export default <T extends DataItem>(
   id?: Id | Array<Id> | IdFunc,
   props?: any,
   slot?: RdpStoreItem<T>

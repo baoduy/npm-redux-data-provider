@@ -1,18 +1,29 @@
-import { Id, RdpConfigItem, RdpFinalConfig, RdpProps } from './rdpDefinitions';
+import {
+  Id,
+  RdpActionsCollection,
+  RdpConfig,
+  RdpConfigItem,
+  RdpData,
+  RequiredRdpActionsCollection
+} from './RdpDefinition';
 
-import { getActionsForConfig } from './getActionsForConfig';
 import { validateDataItem } from './validateData';
 
 const cacheLoadData = new Set();
 
 /** Load Not found data of config */
-export const loadNotFoundData = async <TConfig extends RdpFinalConfig>(
-  props: RdpProps<TConfig>
+export const loadNotFoundData = async <TConfig extends RdpConfig>(
+  config?: TConfig,
+  data?: RdpData<TConfig> | undefined,
+  actions?:
+    | RdpActionsCollection<TConfig>
+    | RequiredRdpActionsCollection<TConfig>
 ) => {
-  const { config, data, actions } = props;
-
-  if (!config || !data) {
-    console.warn('4. loadNotFoundData: There is no config or data found.');
+  if (!config || !actions) {
+    console.warn('4. loadNotFoundData: There is no config or actions found.', {
+      config,
+      actions
+    });
     return;
   }
 
@@ -23,30 +34,24 @@ export const loadNotFoundData = async <TConfig extends RdpFinalConfig>(
     return;
   }
 
-  const acts = getActionsForConfig(config, actions);
-  if (!acts) {
-    console.warn(
-      '4. loadNotFoundData: There is no actions found for config.',
-      config
-    );
-    return;
-  }
-
   cacheLoadData.add(config);
 
   console.warn('4. loadNotFoundData: Start calling API for.', config);
 
   return Promise.all(
     Object.keys(config).map(k => {
-      const cfg = <RdpConfigItem>config[k];
-      const dataItem = data[k];
+      const dataItem = (data && data[k]) || {};
+      const cfg =
+        typeof config[k] === 'boolean'
+          ? ({} as RdpConfigItem)
+          : (config[k] as RdpConfigItem);
 
       //If data is not loaded or not force then do nothing
       if (!cfg.force && validateDataItem(dataItem, cfg)) return;
 
-      const action = acts[k];
+      const api = cfg.name ? actions[cfg.name] || actions[k] : actions[k];
 
-      if (!action) {
+      if (!api) {
         console.warn(
           '4. loadNotFoundData: There is no actions found for ',
           k,
@@ -55,11 +60,26 @@ export const loadNotFoundData = async <TConfig extends RdpFinalConfig>(
         return;
       }
 
-      if ((!cfg.id || Array.isArray(cfg.id)) && action.get)
-        return action.get({ id: cfg.id as Array<Id> });
+      if ((!cfg.id || Array.isArray(cfg.id)) && api.get) {
+        console.warn('4.  loadNotFoundData:: calling GET action.', k, {
+          id: cfg.id as Array<Id>
+        });
+        return api.get({ id: cfg.id as Array<Id> });
+      }
 
-      if (action.getById) return action.getById(cfg.id as Id);
-      if (action.get) return action.get({ id: [cfg.id as Id] });
+      if (api.getById) {
+        console.warn(
+          '4.  loadNotFoundData:: calling GET_BY_ID action.',
+          k,
+          cfg.id
+        );
+        return api.getById(cfg.id as Id);
+      }
+
+      if (api.get) {
+        console.warn('4.  loadNotFoundData:: calling GET action.', k, cfg.id);
+        return api.get({ id: [cfg.id as Id] });
+      }
     })
   )
     .then(() => cacheLoadData.delete(config))

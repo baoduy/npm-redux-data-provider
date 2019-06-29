@@ -2,35 +2,50 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "lib",
-    "module": "es2015",
-    "target": "es5",
+    "paths": {
+      "*": ["types/*"],
+      "@src/*": ["src/*"],
+      "@actions/*": ["src/actions/*"],
+      "@assets/*": ["src/assets/*"],
+      "@commons/*": ["src/commons/*"],
+      "@components/*": ["src/components/*"],
+      "@views/*": ["src/views/*"]
+    },
     "lib": ["es6", "esnext", "dom"],
     //"sourceMap": true,
     //"allowJs": true,
     "jsx": "react",
+    "module": "commonjs",
+    "esModuleInterop": true, // <-- ADD THIS LINE
     "moduleResolution": "node",
     "rootDir": "src",
-    //"noEmit": true,
+    //"noEmit": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "es5",
     "pretty": true,
     "skipLibCheck": true,
     "removeComments": false,
     "forceConsistentCasingInFileNames": true,
     "emitDeclarationOnly": true,
+    "declaration": true,
+    //"emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": false,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
-    "declaration": true,
-    "strict": false,
-    "esModuleInterop": true
+    "strict": true
   },
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts",
-    "tests/ResfulWithObject.test.ts"
+    "tests/*.ts",
+    "src/applicationInsight.jsx"
   ],
   "exclude": [
     "node_modules",

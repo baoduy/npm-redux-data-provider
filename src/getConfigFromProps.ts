@@ -3,10 +3,10 @@ import {
   RdpConfigItem,
   RdpFinalConfig,
   RdpProps
-} from './rdpDefinitions';
+} from './RdpDefinition';
 
-import { createStoreSelectorForConfig } from './createStoreSelectorForConfig';
-import { getIds } from './getIds';
+import createConfigSelector from './createConfigSelector';
+import getIds from './IdResolver';
 import memoize from 'lodash/memoize';
 
 /**
@@ -15,13 +15,13 @@ import memoize from 'lodash/memoize';
  * @param {RdpProps} props
  * @returns {(RdpConfig | undefined)}
  */
-export const getConfigFromProps = memoize(
-  <TConfig extends RdpConfig, TStore>(
+export default memoize(
+  <TConfig extends RdpConfig>(
     props: RdpProps<TConfig>,
-    reduxStore?: TStore
+    reduxStore?: any
   ): RdpFinalConfig<TConfig> | undefined => {
     const { config, ...rest } = props;
-    const selector = createStoreSelectorForConfig(config);
+    const selector = createConfigSelector(config);
     if (!config || !selector) return undefined;
 
     const configStore = reduxStore && selector(reduxStore);
@@ -36,7 +36,8 @@ export const getConfigFromProps = memoize(
           : <RdpConfigItem>cfg;
 
       const slot = configStore && configStore[item.name || k];
-      const id = item.id != undefined ? getIds(item.id, rest, slot) : undefined;
+      const id =
+        item.id !== undefined ? getIds(item.id, rest, slot) : undefined;
 
       results[k] = { ...item, id };
     });

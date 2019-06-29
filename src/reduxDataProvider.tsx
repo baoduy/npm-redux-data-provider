@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import { RdpFinalConfig, RdpProps } from './rdpDefinitions';
-import {
-  RdpMapDispatchToProps,
-  RdpMapStateToProps
-} from './rdpMapStateToProps';
+import { RdpFinalConfig, RdpProps } from './RdpDefinition';
+import { RdpMapDispatchToProps, RdpMapStateToProps } from './RdpMapToProps';
 
 import { connect } from 'react-redux';
 import { loadNotFoundData } from './loadNotFoundData';
 import { render } from 'react-universal-interface';
+import useSafeState from './useSafeState';
 import { validateData } from './validateData';
 
 /**
@@ -21,14 +19,19 @@ import { validateData } from './validateData';
 function ReduxDataProvider<TConfig extends RdpFinalConfig>({
   config,
   data,
-  disabled,
+  disableRdp,
   actions,
   Loading,
   ...rest
 }: RdpProps<TConfig>) {
-  const [dataLoaded, setLoaded] = React.useState(false);
-  const [dataLoading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | string[] | undefined>();
+  const disabled =
+    typeof disableRdp === 'function' ? disableRdp() : disableRdp === true;
+  //Data will be consider is loaded if disable is true.
+  const [dataLoaded, setLoaded] = useSafeState(() => disabled);
+  const [dataLoading, setLoading] = useSafeState(() => false);
+  const [error, setError] = useSafeState<string | string[] | undefined>(
+    () => undefined
+  );
 
   //Load Data from server for those is not found
   React.useEffect(() => {
@@ -36,7 +39,7 @@ function ReduxDataProvider<TConfig extends RdpFinalConfig>({
 
     if (dataLoaded) {
       console.info('3a. RDP: data is loaded', config);
-      return setLoaded(true);
+      return;
     }
 
     if (disabled) {
@@ -53,16 +56,18 @@ function ReduxDataProvider<TConfig extends RdpFinalConfig>({
     console.info('3d. RDP: call API for ', config);
     setLoading(true);
 
-    loadNotFoundData({ config, data, actions })
+    loadNotFoundData(config, data, actions)
       .then(() => {
         console.warn('5. RDP: Data Loaded for', config);
+        setLoading(false);
         return setLoaded(true);
       })
       .catch((error: any) => {
         setError(error);
+        setLoading(false);
         return setLoaded(true);
       });
-  }, [config, data, disabled, actions]);
+  }, [config, data, disableRdp]);
 
   console.log('2. RDP: render for: ', { config, data, error });
 
