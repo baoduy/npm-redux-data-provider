@@ -1,5 +1,9 @@
-import { RdpFinalConfig } from '../src/RdpDefinition';
-import mergeActions from '../src/mergeActions';
+import {
+  RdpConfig,
+  RdpFinalConfig
+} from '../../src/redux-data-provider/RdpDefinition';
+
+import mergeActions from '../../src/redux-data-provider/mergeActions';
 
 describe('Test mergeActions', () => {
   test('All keys should merge to final actions', () => {
@@ -24,7 +28,7 @@ describe('Test mergeActions', () => {
     };
 
     const final = mergeActions(config, global);
-    expect(final.a as any).toMatchObject(config.a.actions as any);
+    expect(final.a).toMatchObject(config.a.actions);
   });
 
   test('The action in config will merge to the global if name provided', () => {
@@ -36,6 +40,6 @@ describe('Test mergeActions', () => {
     };
 
     const final = mergeActions(config, global);
-    expect(final.b as any).toMatchObject(config.a.actions as any);
+    expect(final.b).toMatchObject(config.a.actions);
   });
 });

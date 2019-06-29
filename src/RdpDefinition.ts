@@ -88,8 +88,12 @@ export interface RdpConfigItem {
   force?: boolean;
 }
 
-export type RdpFinalConfig<TConfig extends RdpConfig = any> = {
-  [key in keyof TConfig]: RdpConfigItem
+export interface RdpFinalConfigItem extends RdpConfigItem {
+  id?: Id | Array<Id>;
+}
+
+export type RdpFinalConfig<TConfig extends RdpConfig> = {
+  [key in keyof TConfig]: RdpFinalConfigItem
 };
 
 export type RdpConfig = {
@@ -106,6 +110,10 @@ export type RdpConfig = {
 export type RdpData<TConfig extends RdpConfig> = {
   [K in keyof TConfig]: RdpDataItem
 };
+
+export type ValidateResult<TConfig extends RdpConfig> =
+  | { [k in keyof TConfig]: boolean | string }
+  | true;
 
 /**
  * @description The Data props of ReduxDataProvider which will be passed to the child Component
@@ -135,4 +143,6 @@ export interface RdpProps<TConfig extends RdpConfig>
   data?: RdpData<TConfig>;
   actions?: RdpActionsCollection<TConfig>;
   Loading?: React.ComponentType;
+  /** Indicate whether should bind action to Dispatch or not. */
+  bindActionToDispatch?: boolean;
 }

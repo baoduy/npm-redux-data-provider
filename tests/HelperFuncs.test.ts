@@ -1,5 +1,11 @@
-import getItemsFromStore from '../src/getItemsFromStore';
-import getSlotFromStore from '../src/getSlotFromStore';
+import {
+  IdFunc,
+  RdpProps,
+  RdpStoreItem
+} from '../../src/redux-data-provider/RdpDefinition';
+
+import getItemsFromStore from '../../src/redux-data-provider/getItemsFromStore';
+import getSlotFromStore from '../../src/redux-data-provider/getSlotFromStore';
 
 describe('Test Helper', () => {
   test('Test getItemsFromStore.name with empty slot', () => {

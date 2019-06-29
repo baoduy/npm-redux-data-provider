@@ -1,4 +1,4 @@
-import ReduxDataProvider from './reduxDataProvider';
+import ReduxDataProvider from './ReduxDataProvider';
 
 export { default as withReduxDataProvider } from './withReduxDataProvider';
 export { useReduxDataProvider } from './useReduxDataProvider';

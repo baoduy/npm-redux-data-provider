@@ -1,14 +1,14 @@
-import getIds from '../src/IdResolver';
+import getIds from '../../src/redux-data-provider/IdResolver';
 
 describe('Test Helper', () => {
   test('Test getIds from value', () => {
-    expect(getIds(1, null, undefined)).toBe(1);
-    expect(getIds([1, 2], null, undefined)).toMatchObject([1, 2]);
+    expect(getIds(1, null, null)).toBe(1);
+    expect(getIds([1, 2], null, null)).toMatchObject([1, 2]);
   });
 
   test('Test getIds from props', () => {
-    expect(getIds(() => 1, null, undefined)).toBe(1);
-    expect(getIds((p: any) => p.id, { id: [1, 2] }, undefined)).toMatchObject([
+    expect(getIds(() => 1, null, null)).toBe(1);
+    expect(getIds((p: any) => p.id, { id: [1, 2] }, null)).toMatchObject([
       1,
       2
     ]);

@@ -1,4 +1,4 @@
-import createConfigProvider from '../src/createConfigProvider';
+import createConfigProvider from '../../src/redux-data-provider/createConfigProvider';
 
 test('Test createConfigProvider', () => {
   const state = {

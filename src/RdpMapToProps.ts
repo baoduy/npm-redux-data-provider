@@ -1,9 +1,9 @@
 import { AnyAction, Dispatch } from 'redux';
 import { RdpConfig, RdpProps } from './RdpDefinition';
 
-import bindAction from './bindAction';
 import createConfigProvider from './createConfigProvider';
 import getConfigFromProps from './getConfigFromProps';
+import { isDisable } from './isDisable';
 import isEmpty from 'lodash/isEmpty';
 import mergeActions from './mergeActions';
 
@@ -38,8 +38,14 @@ export const RdpMapDispatchToProps = <TConfig extends RdpConfig>(
   dispatch: Dispatch<AnyAction>,
   props: RdpProps<TConfig>
 ) => {
-  const { config, actions } = props;
-  if (!config || isEmpty(config)) return {};
-  const latestActions = bindAction(mergeActions(config, actions), dispatch);
+  const { config, actions, disableRdp, bindActionToDispatch } = props;
+  if (!config || isEmpty(config) || isDisable(disableRdp)) return {};
+
+  const latestActions = mergeActions(
+    config,
+    actions,
+    dispatch,
+    bindActionToDispatch
+  );
   return { actions: latestActions };
 };

@@ -4,10 +4,12 @@ import { RdpFinalConfig, RdpProps } from './RdpDefinition';
 import { RdpMapDispatchToProps, RdpMapStateToProps } from './RdpMapToProps';
 
 import { connect } from 'react-redux';
-import { loadNotFoundData } from './loadNotFoundData';
+import { isDisable } from './isDisable';
+import loadData from './loadData';
 import { render } from 'react-universal-interface';
-import useSafeState from './useSafeState';
-import { validateData } from './validateData';
+import useSafeState from '@src/hooks/useSafeState';
+
+//PLEASE NOT RDP ls already optimized for loading, an data render. Please DO NOT remove any HOOKS usage.
 
 /**
  * @description ReduxDataProvider is a Redux store helper for data extracting from store an calling server actions to reload the data. if it is not existed
@@ -16,7 +18,7 @@ import { validateData } from './validateData';
  * @extends {React.PureComponent<RdpProps<TConfig>, RdpState>}
  * @template TConfig
  */
-function ReduxDataProvider<TConfig extends RdpFinalConfig>({
+function ReduxDataProvider<TConfig extends RdpFinalConfig<any>>({
   config,
   data,
   disableRdp,
@@ -24,8 +26,7 @@ function ReduxDataProvider<TConfig extends RdpFinalConfig>({
   Loading,
   ...rest
 }: RdpProps<TConfig>) {
-  const disabled =
-    typeof disableRdp === 'function' ? disableRdp() : disableRdp === true;
+  const disabled = isDisable(disableRdp);
   //Data will be consider is loaded if disable is true.
   const [dataLoaded, setLoaded] = useSafeState(() => disabled);
   const [dataLoading, setLoading] = useSafeState(() => false);
@@ -47,16 +48,8 @@ function ReduxDataProvider<TConfig extends RdpFinalConfig>({
       return setLoaded(true);
     }
 
-    const isValid = validateData(data, config);
-    if (isValid) {
-      console.info('3c. RDP: Data is valid. No API call ', config);
-      return setLoaded(true);
-    }
-
-    console.info('3d. RDP: call API for ', config);
     setLoading(true);
-
-    loadNotFoundData(config, data, actions)
+    loadData(config, data, actions)
       .then(() => {
         console.warn('5. RDP: Data Loaded for', config);
         setLoading(false);
@@ -91,5 +84,5 @@ export default React.memo(
   connect(
     RdpMapStateToProps,
     RdpMapDispatchToProps
-  )(ReduxDataProvider as any)
+  )(ReduxDataProvider)
 );
