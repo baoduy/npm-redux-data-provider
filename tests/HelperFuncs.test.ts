@@ -1,5 +1,3 @@
-import { IdFunc, RdpProps, RdpStoreItem } from '../src/RdpDefinition';
-
 import getItemsFromStore from '../src/getItemsFromStore';
 import getSlotFromStore from '../src/getSlotFromStore';
 

@@ -4,8 +4,9 @@
   "description": "The Hooks and HOC provider for React Components to extract the data from Redux Store.",
   "main": "lib/index.js",
   "scripts": {
+    "git-jest": "git submodule update --init --remote configs/jest",
     "test": "jest --watch --coverage --config=configs/jest/ts.jest.json",
-    "test-ci": "npm-run-all git:jest && jest --ci --coverage --config=configs/jest/ts.jest.json && codecov",
+    "test-ci": "npm-run-all git-jest && jest --ci --coverage --config=configs/jest/ts.jest.json && codecov",
     "test-bundle": "bundlesize",
     "ci-publish": "ci-publish",
     "cost": "cost-of-modules --no-install",
