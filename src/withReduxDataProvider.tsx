@@ -1,7 +1,7 @@
 import { RdpActionsCollection, RdpConfig, RdpData } from './RdpDefinition';
 
 import React from 'react';
-import ReduxDataProvider from './ReduxDataProvider';
+import ReduxDataProvider from './reduxDataProvider';
 
 /**
  * The HOC for ReduxDataProvider
