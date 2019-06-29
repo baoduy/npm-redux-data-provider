@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "lib",
+    "paths": {
+      "*": ["types/*"],
+      "@src/*": ["src/*"],
+      "@actions/*": ["src/actions/*"],
+      "@assets/*": ["src/assets/*"],
+      "@commons/*": ["src/commons/*"],
+      "@components/*": ["src/components/*"],
+      "@views/*": ["src/views/*"]
+    },
+    "lib": ["es6", "esnext", "dom"],
+    //"sourceMap": true,
+    //"allowJs": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "esModuleInterop": true, // <-- ADD THIS LINE
+    "moduleResolution": "node",
+    "rootDir": "src",
+    //"noEmit": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "target": "es5",
+    "pretty": true,
+    "skipLibCheck": true,
+    "removeComments": false,
+    "forceConsistentCasingInFileNames": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    //"emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "strict": true
+  },
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "tests/*.ts",
+    "src/applicationInsight.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist",
+    "tests",
+    "configs",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts",
+    "sample"
+  ]
+}
