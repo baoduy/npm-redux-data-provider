@@ -1,5 +1,4 @@
-import { RdpConfig, RdpFinalConfig } from '../src/RdpDefinition';
-
+import { RdpFinalConfig } from '../src/RdpDefinition';
 import mergeActions from '../src/mergeActions';
 
 describe('Test mergeActions', () => {
