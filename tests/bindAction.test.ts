@@ -4,7 +4,7 @@ import bindAction from '../src/bindAction';
 import mergeActions from '../src/mergeActions';
 
 describe('Test bindAction memorization', () => {
-  test('bindAction the same config and actions', () => {
+  test.skip('bindAction the same config and actions', () => {
     const config: RdpConfig = { a: true };
     const actions: RdpActionsCollection<any> = { a: { get: jest.fn() } };
 
