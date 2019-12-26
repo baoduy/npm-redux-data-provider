@@ -3,7 +3,8 @@ import {
   RdpConfigItem,
   RdpConfigStore,
   RdpData,
-  RdpStoreItem
+  RdpStoreItem,
+  RdpFinalConfig
 } from './RdpDefinition';
 
 import createConfigSelector from './createConfigSelector';
@@ -25,33 +26,31 @@ export const defaultMetaDataFunc = <T>(slot?: RdpStoreItem<T>) => {
  * @param config
  * @param props
  */
-export default memoize(
-  <TConfig extends RdpConfig>(config: TConfig, props?: any) => {
-    const selector = createConfigSelector(config);
-    if (!selector) return () => ({});
+export default memoize(<TConfig extends RdpConfig>(config: TConfig, props?: any) => {
+  const selector = createConfigSelector(config as RdpFinalConfig<any>);
+  if (!selector) return () => ({});
 
-    return createSelector(
-      [selector as any],
-      (store: RdpConfigStore<TConfig>): RdpData<TConfig> => {
-        const results = {};
+  return createSelector(
+    [selector as any],
+    (store: RdpConfigStore<TConfig>): RdpData<TConfig> => {
+      const results = {};
 
-        Object.keys(config).forEach(k => {
-          const item = <RdpConfigItem>config[k];
-          const slot = store[k];
+      Object.keys(config).forEach(k => {
+        const item = <RdpConfigItem>config[k];
+        const slot = store[k];
 
-          let rs = getItemsFromStore(item.id, props, slot);
-          const meta = getMetaData(item.meta, slot);
+        let rs = getItemsFromStore(item.id, props, slot);
+        const meta = getMetaData(item.meta, slot);
 
-          if (meta) {
-            if (Array.isArray(rs)) rs = [...rs];
-            else rs = { ...rs };
-            rs.meta = meta;
-          }
+        if (meta) {
+          if (Array.isArray(rs)) rs = [...rs];
+          else rs = { ...rs };
+          rs.meta = meta;
+        }
 
-          results[k] = rs;
-        });
-        return <RdpData<TConfig>>results;
-      }
-    );
-  }
-);
+        results[k] = rs;
+      });
+      return <RdpData<TConfig>>results;
+    }
+  );
+});

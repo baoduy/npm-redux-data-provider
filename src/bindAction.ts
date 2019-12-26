@@ -1,21 +1,20 @@
-import { AnyAction, Dispatch, bindActionCreators } from 'redux';
-import { RdpConfig, RequiredRdpActionsCollection } from './RdpDefinition';
+import { AnyAction, Dispatch, bindActionCreators } from "redux";
+import { RdpActionsCollection, RdpConfig, RequiredRdpActionsCollection } from "./RdpDefinition";
 
-import memoize from 'lodash/memoize';
-
-function bindAction<TConfig extends RdpConfig>(
-  actions: RequiredRdpActionsCollection<TConfig>,
-  dispatch: Dispatch<AnyAction>
+export function bindAction<TConfig extends RdpConfig>(
+  actions: RdpActionsCollection<TConfig>,
+  dispatch?: Dispatch<AnyAction>
 ): RequiredRdpActionsCollection<TConfig> {
   if (!actions) return actions;
 
   const finalActions = {};
 
   Object.keys(actions).forEach((k: string) => {
-    finalActions[k] = bindActionCreators(actions[k] as any, dispatch);
+    const ac = actions[k] as any;
+    if (!ac) return;
+
+    finalActions[k] = dispatch ? bindActionCreators(actions[k] as any, dispatch) : actions[k];
   });
 
   return finalActions as RequiredRdpActionsCollection<TConfig>;
 }
-
-export default memoize(bindAction);

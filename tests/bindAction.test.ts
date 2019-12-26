@@ -1,6 +1,9 @@
-import { RdpActionsCollection, RdpConfig } from '../src/RdpDefinition';
+import {
+  RdpActionsCollection,
+  RdpConfig
+} from '../src/RdpDefinition';
 
-import bindAction from '../src/bindAction';
+import { bindAction } from '../src/bindAction';
 import mergeActions from '../src/mergeActions';
 
 describe('Test bindAction memorization', () => {

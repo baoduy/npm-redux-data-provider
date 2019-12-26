@@ -1,6 +1,6 @@
-import { MetaDataFunc, RdpStoreItem } from './RdpDefinition';
+import { MetaDataFunc, RdpStoreItem } from "./RdpDefinition";
 
-import { defaultMetaDataFunc } from './createConfigProvider';
+import { defaultMetaDataFunc } from "./createConfigProvider";
 
 export default <T>(meta?: boolean | MetaDataFunc, slot?: RdpStoreItem<T>) => {
   if (!meta) return undefined;

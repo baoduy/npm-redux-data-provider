@@ -1,4 +1,7 @@
-import { RdpActionsCollection, RdpConfig } from '../src/RdpDefinition';
+import {
+  RdpActionsCollection,
+  RdpConfig
+} from '../src/RdpDefinition';
 
 import mergeActions from '../src/mergeActions';
 

@@ -1,10 +1,10 @@
-import { ActionCreator, ActionCreatorsMapObject } from 'redux';
+import { ActionCreator, ActionCreatorsMapObject } from "redux";
 
-import { UniversalProps } from 'react-universal-interface';
+import { UniversalProps } from "react-universal-interface";
 
-export type Id = number | string;
+export declare type Id = number | string;
 
-export type DataItem = {
+export declare type DataItem = {
   id: Id;
 
   [key: string]: any;
@@ -14,48 +14,45 @@ type MetaItem<TMetaData> = {
   meta?: TMetaData;
 };
 
-export type RdpSingleData<T extends DataItem = any, TMetaData = any> = T &
-  MetaItem<TMetaData>;
+export declare type RdpSingleData<T extends DataItem = any, TMetaData = any> = T & MetaItem<TMetaData>;
 
-export type RdpArrayData<T extends DataItem = any, TMetaData = any> = Array<T> &
-  MetaItem<TMetaData>;
+export declare type RdpArrayData<T extends DataItem = any, TMetaData = any> = Array<T> & MetaItem<TMetaData>;
 
-export type RdpDataItem<T extends DataItem = any, TMetaData = any> =
+export declare type RdpDataItem<T extends DataItem = any, TMetaData = any> =
   | RdpSingleData<T, TMetaData>
   | RdpArrayData<T, TMetaData>;
 
-export type ValidateFunc = <T extends RdpDataItem>(item: T) => boolean;
+export declare type ValidateFunc = <T extends RdpDataItem>(item: T) => boolean;
 
-export type MetaDataFunc = <T>(slot?: RdpStoreItem<T>) => any;
+export declare type MetaDataFunc = <T>(slot?: RdpStoreItem<T>) => any;
 
-export type IdFunc = <TConfig extends RdpConfig>(
+export declare type IdFunc = <TConfig extends RdpConfig>(
   props: RdpProps<TConfig>,
   slot?: RdpStoreItem
 ) => Id | Array<Id>;
 
-export interface RdpActions<A = any>
-  extends Partial<ActionCreatorsMapObject<A>> {
+export declare interface RdpActions<A = any> extends Partial<ActionCreatorsMapObject<A>> {
   get: ActionCreator<A>;
   getById?: ActionCreator<A>;
   [key: string]: ActionCreator<A> | undefined;
 }
 
-export type RdpStoreDataItem<T> = {
+export declare type RdpStoreDataItem<T> = {
   data: { items?: Array<T>; [key: string]: any };
 };
 
-export type RdpStoreItem<T = any> = Array<T> | RdpStoreDataItem<T>;
+export declare type RdpStoreItem<T = any> = Array<T> | RdpStoreDataItem<T>;
 
-export type RequiredRdpActionsCollection<TConfig extends RdpConfig> = {
-  [K in keyof TConfig]: RdpActions
+export declare type RequiredRdpActionsCollection<TConfig extends RdpConfig> = {
+  [K in keyof TConfig]: RdpActions;
 };
 
-export type RdpActionsCollection<TConfig extends RdpConfig> = {
-  [K in keyof TConfig]: RdpActions | undefined
+export declare type RdpActionsCollection<TConfig extends RdpConfig> = {
+  [K in keyof TConfig]: RdpActions | undefined;
 };
 
-export type RdpConfigStore<TConfig extends RdpConfig, T = any> = {
-  [K in keyof TConfig]: RdpStoreItem<T> | undefined
+export declare type RdpConfigStore<TConfig extends RdpConfig, T = any> = {
+  [K in keyof TConfig]: RdpStoreItem<T> | undefined;
 };
 
 /**
@@ -71,7 +68,7 @@ export type RdpConfigStore<TConfig extends RdpConfig, T = any> = {
  * @export
  * @interface RdpConfigItem
  */
-export interface RdpConfigItem {
+export declare interface RdpConfigItem {
   /** it can be an Array of Id, an Id or function which return Id from store */
   id?: IdFunc | Id | Array<Id>;
   /** Data transformer from the store */
@@ -88,11 +85,15 @@ export interface RdpConfigItem {
   force?: boolean;
 }
 
-export type RdpFinalConfig<TConfig extends RdpConfig = any> = {
-  [key in keyof TConfig]: RdpConfigItem
+export declare interface RdpFinalConfigItem extends RdpConfigItem {
+  id?: Id | Array<Id>;
+}
+
+export declare type RdpFinalConfig<TConfig extends RdpConfig> = {
+  [key in keyof TConfig]: RdpFinalConfigItem;
 };
 
-export type RdpConfig = {
+export declare type RdpConfig = {
   [key: string]: RdpConfigItem | boolean;
 };
 
@@ -103,9 +104,13 @@ export type RdpConfig = {
  * @interface RdpData
  * @template TData
  */
-export type RdpData<TConfig extends RdpConfig> = {
-  [K in keyof TConfig]: RdpDataItem
+export declare type RdpData<TConfig extends RdpConfig> = {
+  [K in keyof TConfig]: RdpDataItem;
 };
+
+export declare type ValidateResult<TConfig extends RdpConfig> =
+  | { [k in keyof TConfig]: boolean | string }
+  | true;
 
 /**
  * @description The Data props of ReduxDataProvider which will be passed to the child Component
@@ -114,7 +119,7 @@ export type RdpData<TConfig extends RdpConfig> = {
  * @interface RdpDataProps
  */
 
-export type RdpDataProps<TConfig extends RdpConfig> = {
+export declare type RdpDataProps<TConfig extends RdpConfig> = {
   loading?: boolean;
   error?: any;
   actions?: RequiredRdpActionsCollection<TConfig>;
@@ -128,11 +133,12 @@ export type RdpDataProps<TConfig extends RdpConfig> = {
  * @extends {UniversalProps<RdpState<TConfig>>}
  * @template TConfig
  */
-export interface RdpProps<TConfig extends RdpConfig>
-  extends UniversalProps<RdpDataProps<TConfig>> {
+export declare interface RdpProps<TConfig extends RdpConfig> extends UniversalProps<RdpDataProps<TConfig>> {
   disableRdp?: (() => boolean) | boolean;
   config?: TConfig;
   data?: RdpData<TConfig>;
   actions?: RdpActionsCollection<TConfig>;
   Loading?: React.ComponentType;
+  /** Indicate whether should bind action to Dispatch or not. */
+  bindActionToDispatch?: boolean;
 }

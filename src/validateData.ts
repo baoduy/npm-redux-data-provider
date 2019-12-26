@@ -2,32 +2,39 @@ import {
   DataItem,
   Id,
   RdpConfig,
-  RdpConfigItem,
   RdpData,
-  RdpDataItem
-} from './RdpDefinition';
+  RdpDataItem,
+  RdpFinalConfig,
+  RdpFinalConfigItem,
+  ValidateResult
+} from "./RdpDefinition";
 
-import isEmpty from 'lodash/isEmpty';
+import isEmpty from "lodash/isEmpty";
+import memoize from "lodash/memoize";
 
 export const validateDataItem = <T extends DataItem>(
-  dataItem: RdpDataItem<T>,
-  configItem: RdpConfigItem
-): boolean => {
+  dataItem: RdpDataItem<T> | undefined,
+  configItem: RdpFinalConfigItem
+): true | string => {
+  if (!dataItem) return "Data Item is empty.";
+
   //Validate whether dataItem is empty or not
-  if (isEmpty(dataItem)) return false;
+  const { meta, ...rest } = dataItem;
+  if (isEmpty(rest)) return "Data Item is empty.";
 
-  //validate the list of Id against data items
-  if (Array.isArray(configItem.id)) {
-    if (!Array.isArray(dataItem)) return false;
+  const dataArray = Array.isArray(dataItem) ? dataItem : [dataItem];
+  const listId =
+    configItem.id && Array.isArray(configItem.id) ? (configItem.id as Array<Id>) : [configItem.id];
 
-    const listId = <Array<Id>>configItem.id;
-
-    if (listId.find(id => dataItem.findIndex(d => d.id === id) <= 0))
-      return false;
+  if (listId) {
+    const notFoundId = listId.find(id => dataArray.findIndex(d => d.id === id) < 0);
+    if (notFoundId) return `The required Id ${notFoundId} is not found in Data Item.`;
   }
 
-  //If it is not empty and custom validation provided then validate with custom rule.
-  return configItem.validate ? configItem.validate(dataItem) : true;
+  if (configItem.validate && !configItem.validate(dataItem))
+    return "Data Item is not passed custom validation";
+
+  return true;
 };
 
 /**
@@ -37,23 +44,27 @@ export const validateDataItem = <T extends DataItem>(
  * @param {T} data
  * @returns {boolean}
  */
-export const validateData = <TConfig extends RdpConfig>(
-  data?: RdpData<TConfig>,
-  config?: TConfig
-): boolean => {
-  if (!config) return true;
-  if (!data) return false;
+export default memoize(
+  <TConfig extends RdpConfig>(
+    data: RdpData<TConfig>,
+    config: RdpFinalConfig<TConfig>
+  ): ValidateResult<TConfig> => {
+    if (!config) return true;
+    const result = {};
 
-  let passed: boolean = true;
+    Object.keys(config).forEach(k => {
+      const configItem = <RdpFinalConfigItem>config[k];
+      //The data item will be passed if satisfy both validation below.
+      const dataItem = data && <RdpDataItem>data[k];
 
-  Object.keys(config).forEach(k => {
-    const configItem = <RdpConfigItem>config[k];
-    //The data item will be passed if satisfy both validation below.
-    const dataItem = <RdpDataItem>data[k];
+      let error: string | true = true;
 
-    if (!passed) return;
-    passed = configItem.force ? false : validateDataItem(dataItem, configItem);
-  });
+      if (configItem.force) error = "Data invalid because fore load.";
+      else error = validateDataItem(dataItem, configItem);
 
-  return passed;
-};
+      result[k] = error;
+    });
+
+    return result as ValidateResult<TConfig>;
+  }
+);

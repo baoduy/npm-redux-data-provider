@@ -1,13 +1,15 @@
-import * as React from 'react';
-
 import { RdpFinalConfig, RdpProps } from './RdpDefinition';
 import { RdpMapDispatchToProps, RdpMapStateToProps } from './RdpMapToProps';
 
+import React from 'react';
 import { connect } from 'react-redux';
-import { loadNotFoundData } from './loadNotFoundData';
+import { isDisable } from './isDisable';
+import isEqual from 'lodash/isEqual';
+import loadData from './loadData';
 import { render } from 'react-universal-interface';
-import useSafeState from './useSafeState';
-import { validateData } from './validateData';
+import { useSafeState } from '@src/useSafeState';
+
+//PLEASE NOT RDP ls already optimized for loading, an data render. Please DO NOT remove any HOOKS usage.
 
 /**
  * @description ReduxDataProvider is a Redux store helper for data extracting from store an calling server actions to reload the data. if it is not existed
@@ -16,7 +18,7 @@ import { validateData } from './validateData';
  * @extends {React.PureComponent<RdpProps<TConfig>, RdpState>}
  * @template TConfig
  */
-function ReduxDataProvider<TConfig extends RdpFinalConfig>({
+function ReduxDataProvider<TConfig extends RdpFinalConfig<any>>({
   config,
   data,
   disableRdp,
@@ -24,14 +26,11 @@ function ReduxDataProvider<TConfig extends RdpFinalConfig>({
   Loading,
   ...rest
 }: RdpProps<TConfig>) {
-  const disabled =
-    typeof disableRdp === 'function' ? disableRdp() : disableRdp === true;
+  const disabled = isDisable(disableRdp);
   //Data will be consider is loaded if disable is true.
   const [dataLoaded, setLoaded] = useSafeState(() => disabled);
   const [dataLoading, setLoading] = useSafeState(() => false);
-  const [error, setError] = useSafeState<string | string[] | undefined>(
-    () => undefined
-  );
+  const [error, setError] = useSafeState<string | string[] | undefined>(() => undefined);
 
   //Load Data from server for those is not found
   React.useEffect(() => {
@@ -47,18 +46,12 @@ function ReduxDataProvider<TConfig extends RdpFinalConfig>({
       return setLoaded(true);
     }
 
-    const isValid = validateData(data, config);
-    if (isValid) {
-      console.info('3c. RDP: Data is valid. No API call ', config);
-      return setLoaded(true);
-    }
-
-    console.info('3d. RDP: call API for ', config);
     setLoading(true);
+    console.warn('4. RDP: Start Loading Data for', config);
 
-    loadNotFoundData(config, data, actions)
-      .then(() => {
-        console.warn('5. RDP: Data Loaded for', config);
+    loadData(config, data, actions)
+      .then(rs => {
+        console.warn('5. RDP: Data Loaded for', config, rs);
         setLoading(false);
         return setLoaded(true);
       })
@@ -67,29 +60,29 @@ function ReduxDataProvider<TConfig extends RdpFinalConfig>({
         setLoading(false);
         return setLoaded(true);
       });
-  }, [config, data, disableRdp]);
+  }, [config, data, disabled]);
 
-  console.log('2. RDP: render for: ', { config, data, error });
+  console.log('2. RDP: render for: ', { config, data, error, actions });
 
-  return React.useMemo(() => {
-    if (!dataLoaded && Loading)
-      return typeof Loading === 'string' ? <>{Loading}</> : <Loading />;
+  if (!dataLoaded && Loading) return typeof Loading === 'string' ? <>{Loading}</> : <Loading />;
 
-    //Only render when it has value.
-    return render(
-      rest,
-      error ? { ...data, error, actions } : { ...data, actions }
-    );
-  }, [data, error, dataLoaded]);
+  //Only render when it has value.
+  return render(rest, error ? { ...data, error, actions } : { ...data, actions });
 }
 
-//ReduxDataProvider.defaultProps = { Loading: 'loading...' };
+ReduxDataProvider.whyDidYouRender = false;
+
 /**
  * Connect to Redux and export Component as default
  */
-export default React.memo(
-  connect(
-    RdpMapStateToProps,
-    RdpMapDispatchToProps
-  )(ReduxDataProvider as any)
+const ConnectedRdp = React.memo(
+  connect(RdpMapStateToProps, RdpMapDispatchToProps)(ReduxDataProvider),
+  (prevProps: any, nextProps: any) => {
+    const { render: r1, ...others } = prevProps;
+    const { render: r2, ...rests } = nextProps;
+
+    return isEqual(others, rests);
+  }
 );
+
+export default ConnectedRdp;

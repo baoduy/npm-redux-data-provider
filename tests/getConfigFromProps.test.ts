@@ -21,21 +21,16 @@ describe('Test getConfigFromProps', () => {
       }
     }; //Load vendor 1 //Load product 1,2
 
-    const config1 = getConfigFromProps(props1);
-    const config2 = getConfigFromProps(props2);
+    const config1: any = getConfigFromProps(props1);
+    const config2: any = getConfigFromProps(props2);
 
-    expect(config1).toBeDefined();
-    expect(config2).toBeDefined();
-
-    expect(Object.keys(config1 as any).length).toBe(
-      Object.keys(config2 as any).length
-    );
+    expect(Object.keys(config1).length).toBe(Object.keys(config2).length);
 
     expect(config1).not.toBe(config2);
-    expect(config1 as any).not.toMatchObject(config2 as any);
+    expect(config1).not.toMatchObject(config2 as any);
 
-    expect(config1 && config1.vendor.id).toBe(1);
-    expect(config2 && config2.vendor.id).toBe(2);
+    expect(config1?.vendor.id).toBe(1);
+    expect(config2?.vendor.id).toBe(2);
 
     //Get again
     const config3 = getConfigFromProps(props1);
@@ -62,6 +57,6 @@ describe('Test getConfigFromProps', () => {
       }
     });
 
-    expect(config && config.customer.meta).toBeDefined();
+    expect(config?.customer.meta).toBeDefined();
   });
 });

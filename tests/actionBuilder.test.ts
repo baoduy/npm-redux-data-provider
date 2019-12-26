@@ -23,8 +23,8 @@ describe('Test mergeActions', () => {
       a: { get: jest.fn(), getById: jest.fn() }
     };
 
-    const final = mergeActions(config, global);
-    expect(final.a as any).toMatchObject(config.a.actions as any);
+    const final: any = mergeActions(config, global);
+    expect(final.a).toMatchObject(config.a.actions as any);
   });
 
   test('The action in config will merge to the global if name provided', () => {
@@ -35,7 +35,7 @@ describe('Test mergeActions', () => {
       a: { get: jest.fn(), getById: jest.fn() }
     };
 
-    const final = mergeActions(config, global);
-    expect(final.b as any).toMatchObject(config.a.actions as any);
+    const final: any = mergeActions(config, global);
+    expect(final.b).toMatchObject(config.a.actions as any);
   });
 });
