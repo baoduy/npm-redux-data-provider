@@ -15,8 +15,8 @@
     "build-doc": "docz build",
     "clean": "rimraf -f -rmdir lib",
     "build-types": "tsc",
-    "build-js": "babel src --out-dir lib --extensions \".ts,.tsx\" --envName production",
-    "build": "npm-run-all clean build-types build-js",
+    "build-js": "babel src --out-dir lib --extensions \".ts,.tsx\"",
+    "build": "cross-env NODE_ENV=production && npm-run-all clean build-types build-js",
     "doc": "docz dev",
     "doc-build": "docz build",
     "test-ui": "majestic"
@@ -47,6 +47,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-syntax-dynamic-import": "^7.7.4",
     "@babel/plugin-syntax-jsx": "^7.7.4",
     "@babel/plugin-transform-react-display-name": "^7.7.4",
@@ -64,6 +65,7 @@
     "babel-preset-env": "^1.7.0",
     "bundlesize": "^0.18.0",
     "ci-publish": "^1.3.1",
+    "cross-env": "^6.0.3",
     "docz": "^2.2.0",
     "docz-theme-default": "^1.2.0",
     "enzyme": "^3.11.0",
