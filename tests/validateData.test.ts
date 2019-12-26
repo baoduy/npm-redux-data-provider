@@ -1,5 +1,5 @@
-import { RdpFinalConfig } from '../../src/redux-data-provider/RdpDefinition';
-import validateData from '../../src/redux-data-provider/validateData';
+import { RdpFinalConfig } from '../src/RdpDefinition';
+import validateData from '../src/validateData';
 
 describe('Test Validation', () => {
   test('Validate data against config All Passed', () => {

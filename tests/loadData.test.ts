@@ -1,10 +1,6 @@
-import {
-  RdpFinalConfig,
-  RequiredRdpActionsCollection
-} from '../../src/redux-data-provider/RdpDefinition';
+import { RdpFinalConfig, RequiredRdpActionsCollection } from '../src/RdpDefinition';
 
-import loadData from '../../src/redux-data-provider/loadData';
-import { notDeepEqual } from 'assert';
+import loadData from '../src/loadData';
 
 describe('Test loadData', () => {
   test('load undefined data', () => {
@@ -67,8 +63,8 @@ describe('Test loadData', () => {
       vendor: {}
     };
     const actions: RequiredRdpActionsCollection<any> = {
-      customer: { get: undefined },
-      vendor: { get: undefined }
+      customer: { get: undefined as any },
+      vendor: { get: undefined as any }
     };
     const data = {
       customer: [],

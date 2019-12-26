@@ -3,7 +3,7 @@ import {
   RdpConfig,
   RdpFinalConfig,
   RequiredRdpActionsCollection
-} from './RdpDefinition';
+} from "./RdpDefinition";
 
 export default <TConfig extends RdpConfig>(
   key: string,

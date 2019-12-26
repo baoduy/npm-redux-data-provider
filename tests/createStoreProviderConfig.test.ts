@@ -1,12 +1,22 @@
-import createConfigProvider from '../../src/redux-data-provider/createConfigProvider';
+import createConfigProvider from '../src/createConfigProvider';
 
 test('Test createConfigProvider', () => {
   const state = {
     customer: {
-      data: { items: [{ id: 1, name: 'C123' }, { id: 2, name: 'C123' }] }
+      data: {
+        items: [
+          { id: 1, name: 'C123' },
+          { id: 2, name: 'C123' }
+        ]
+      }
     },
     vendor: {
-      data: { items: [{ id: 1, name: 'V123' }, { id: 2, name: 'V123' }] }
+      data: {
+        items: [
+          { id: 1, name: 'V123' },
+          { id: 2, name: 'V123' }
+        ]
+      }
     },
     product: [
       { id: 1, name: 'P123' },
@@ -29,7 +39,7 @@ test('Test createConfigProvider', () => {
   }; //Load vendor 1 //Load product 1,2
 
   const provider = createConfigProvider(props.config, props);
-  const result = provider(state);
+  const result: any = provider(state);
 
   expect(result.customer).toHaveLength(2);
   expect(result.customer.meta).toBeDefined();
@@ -48,7 +58,10 @@ test('Test createConfigProvider with meta for Object', () => {
       data: {
         editId: 1,
         loading: false,
-        items: [{ id: 1, name: 'C123' }, { id: 2, name: 'C123' }]
+        items: [
+          { id: 1, name: 'C123' },
+          { id: 2, name: 'C123' }
+        ]
       }
     }
   };
@@ -60,7 +73,7 @@ test('Test createConfigProvider with meta for Object', () => {
   };
 
   const provider = createConfigProvider(props.config, props);
-  const result = provider(state);
+  const result: any = provider(state);
 
   expect(result.customer).toBeDefined();
   expect(result.customer.meta).toBeDefined();
@@ -76,7 +89,10 @@ test('Test createConfigProvider with meta for Array', () => {
       data: {
         editId: 1,
         loading: false,
-        items: [{ id: 1, name: 'C123' }, { id: 2, name: 'C123' }]
+        items: [
+          { id: 1, name: 'C123' },
+          { id: 2, name: 'C123' }
+        ]
       }
     }
   };
@@ -88,7 +104,7 @@ test('Test createConfigProvider with meta for Array', () => {
   };
 
   const provider = createConfigProvider(props.config, props);
-  const result = provider(state);
+  const result: any = provider(state);
 
   expect(result.customer).toHaveLength(2);
   expect(result.customer.meta.editId).toBe(1);

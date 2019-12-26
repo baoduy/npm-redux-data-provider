@@ -1,13 +1,7 @@
-import {
-  DataItem,
-  Id,
-  IdFunc,
-  RdpDataItem,
-  RdpStoreItem
-} from './RdpDefinition';
+import { DataItem, Id, IdFunc, RdpDataItem, RdpStoreItem } from "./RdpDefinition";
 
-import filterByIds from 'redux-toolbelt-immutable-helpers/lib/filterByIds';
-import getIds from './IdResolver';
+import filterByIds from "redux-toolbelt-immutable-helpers/lib/filterByIds";
+import getIds from "./IdResolver";
 
 /**
  * @description Get item by Id in Redux Store
@@ -26,9 +20,7 @@ export default <T extends DataItem>(
   if (!slot) return undefined;
 
   const finalSlot = Array.isArray(slot) ? slot : slot.data || slot;
-  const items = Array.isArray(finalSlot)
-    ? finalSlot
-    : finalSlot.items || finalSlot;
+  const items = Array.isArray(finalSlot) ? finalSlot : finalSlot.items || finalSlot;
 
   const finalId = id && getIds(id, props, slot);
   if (finalId === undefined || finalId === null) return <RdpDataItem<T>>items;

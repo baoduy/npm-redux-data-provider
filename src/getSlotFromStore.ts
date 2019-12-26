@@ -1,4 +1,4 @@
-import { RdpStoreItem } from './RdpDefinition';
+import { RdpStoreItem } from "./RdpDefinition";
 
 /**
  * @description Get Data Slot in Redux Store by name
@@ -9,7 +9,7 @@ import { RdpStoreItem } from './RdpDefinition';
  * @returns {Array<T>}
  */
 export default <TStore, T>(name: string, state: TStore): RdpStoreItem<T> => {
-  if (!name) throw 'Name cannot be undefined';
+  if (!name) throw "Name cannot be undefined";
   const storeItems = state[name];
   if (!storeItems) return storeItems;
   //if The slot has data prop then return data out else return slot.

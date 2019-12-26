@@ -16,9 +16,7 @@ const cacheLoadData = new Set();
 export default async <TConfig extends RdpConfig>(
   config?: RdpFinalConfig<TConfig>,
   data?: RdpData<TConfig> | undefined,
-  actions?:
-    | RdpActionsCollection<TConfig>
-    | RequiredRdpActionsCollection<TConfig>
+  actions?: RdpActionsCollection<TConfig> | RequiredRdpActionsCollection<TConfig>
 ) => {
   if (!config || !actions) {
     console.warn('4. loadData: There is no config or actions found.', {
@@ -33,7 +31,7 @@ export default async <TConfig extends RdpConfig>(
     return;
   }
 
-  const result = validateData(data || {}, config);
+  const result = validateData(data || ({} as any), config);
   if (result === true) {
     console.log('4. loadData: Data is valid, no API call.', {
       result,
@@ -93,8 +91,7 @@ export default async <TConfig extends RdpConfig>(
       cacheLoadData.delete(config);
       return rs;
     })
-    .catch(error => {
+    .catch(() => {
       cacheLoadData.delete(config);
-      throw error;
     });
 };

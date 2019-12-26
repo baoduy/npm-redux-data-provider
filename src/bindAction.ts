@@ -1,9 +1,5 @@
-import { AnyAction, Dispatch, bindActionCreators } from 'redux';
-import {
-  RdpActionsCollection,
-  RdpConfig,
-  RequiredRdpActionsCollection
-} from './RdpDefinition';
+import { AnyAction, Dispatch, bindActionCreators } from "redux";
+import { RdpActionsCollection, RdpConfig, RequiredRdpActionsCollection } from "./RdpDefinition";
 
 export function bindAction<TConfig extends RdpConfig>(
   actions: RdpActionsCollection<TConfig>,
@@ -17,9 +13,7 @@ export function bindAction<TConfig extends RdpConfig>(
     const ac = actions[k] as any;
     if (!ac) return;
 
-    finalActions[k] = dispatch
-      ? bindActionCreators(actions[k] as any, dispatch)
-      : actions[k];
+    finalActions[k] = dispatch ? bindActionCreators(actions[k] as any, dispatch) : actions[k];
   });
 
   return finalActions as RequiredRdpActionsCollection<TConfig>;

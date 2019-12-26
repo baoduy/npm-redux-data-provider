@@ -1,4 +1,4 @@
-import { Id, IdFunc, RdpStoreItem } from './RdpDefinition';
+import { Id, IdFunc, RdpStoreItem } from "./RdpDefinition";
 
 /**
  * @description Resolve Id .
@@ -6,8 +6,5 @@ import { Id, IdFunc, RdpStoreItem } from './RdpDefinition';
  * @param {*} props
  * @returns {(Id | Array<Id>)} Should be Id or Array of Id
  */
-export default <T>(
-  id: Id | Array<Id> | IdFunc,
-  props?: any,
-  slot?: RdpStoreItem<T>
-): Id | Array<Id> => (typeof id === 'function' ? id(props, slot) : id);
+export default <T>(id: Id | Array<Id> | IdFunc, props?: any, slot?: RdpStoreItem<T>): Id | Array<Id> =>
+  typeof id === "function" ? id(props, slot) : id;

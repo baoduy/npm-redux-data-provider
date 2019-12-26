@@ -7,34 +7,32 @@ import {
   RdpFinalConfig,
   RdpFinalConfigItem,
   ValidateResult
-} from './RdpDefinition';
+} from "./RdpDefinition";
 
-import isEmpty from 'lodash/isEmpty';
-import memoize from 'lodash/memoize';
+import isEmpty from "lodash/isEmpty";
+import memoize from "lodash/memoize";
 
 export const validateDataItem = <T extends DataItem>(
   dataItem: RdpDataItem<T> | undefined,
   configItem: RdpFinalConfigItem
 ): true | string => {
+  if (!dataItem) return "Data Item is empty.";
+
   //Validate whether dataItem is empty or not
-  if (isEmpty(dataItem)) return 'Data Item is empty.';
+  const { meta, ...rest } = dataItem;
+  if (isEmpty(rest)) return "Data Item is empty.";
 
   const dataArray = Array.isArray(dataItem) ? dataItem : [dataItem];
   const listId =
-    configItem.id && Array.isArray(configItem.id)
-      ? (configItem.id as Array<Id>)
-      : [configItem.id];
+    configItem.id && Array.isArray(configItem.id) ? (configItem.id as Array<Id>) : [configItem.id];
 
   if (listId) {
-    const notFoundId = listId.find(
-      id => dataArray.findIndex(d => d.id === id) < 0
-    );
-    if (notFoundId)
-      return `The required Id ${notFoundId} is not found in Data Item.`;
+    const notFoundId = listId.find(id => dataArray.findIndex(d => d.id === id) < 0);
+    if (notFoundId) return `The required Id ${notFoundId} is not found in Data Item.`;
   }
 
   if (configItem.validate && !configItem.validate(dataItem))
-    return 'Data Item is not passed custom validation';
+    return "Data Item is not passed custom validation";
 
   return true;
 };
@@ -61,7 +59,7 @@ export default memoize(
 
       let error: string | true = true;
 
-      if (configItem.force) error = 'Data invalid because fore load.';
+      if (configItem.force) error = "Data invalid because fore load.";
       else error = validateDataItem(dataItem, configItem);
 
       result[k] = error;

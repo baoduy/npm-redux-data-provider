@@ -1,9 +1,9 @@
 import {
   RdpActionsCollection,
   RdpConfig
-} from '../../src/redux-data-provider/RdpDefinition';
+} from '../src/RdpDefinition';
 
-import mergeActions from '../../src/redux-data-provider/mergeActions';
+import mergeActions from '../src/mergeActions';
 
 describe('Test bindAction memorization', () => {
   test('merge Actions from globalAction', () => {

@@ -1,11 +1,5 @@
-import {
-  IdFunc,
-  RdpProps,
-  RdpStoreItem
-} from '../../src/redux-data-provider/RdpDefinition';
-
-import getItemsFromStore from '../../src/redux-data-provider/getItemsFromStore';
-import getSlotFromStore from '../../src/redux-data-provider/getSlotFromStore';
+import getItemsFromStore from '../src/getItemsFromStore';
+import getSlotFromStore from '../src/getSlotFromStore';
 
 describe('Test Helper', () => {
   test('Test getItemsFromStore.name with empty slot', () => {
@@ -16,10 +10,20 @@ describe('Test Helper', () => {
   test('Test getSlotFromStore', () => {
     const state = {
       customer: {
-        data: { items: [{ id: 1, name: 'C123' }, { id: 2, name: 'C123' }] }
+        data: {
+          items: [
+            { id: 1, name: 'C123' },
+            { id: 2, name: 'C123' }
+          ]
+        }
       }, //Load vendor 1
       vendor: {
-        data: { items: [{ id: 1, name: 'V123' }, { id: 2, name: 'V123' }] }
+        data: {
+          items: [
+            { id: 1, name: 'V123' },
+            { id: 2, name: 'V123' }
+          ]
+        }
       }, //Load product 1,2
       product: [
         { id: 1, name: 'P123' },
@@ -28,9 +32,7 @@ describe('Test Helper', () => {
       ]
     };
 
-    expect(getSlotFromStore('customer', state)).toMatchObject(
-      state.customer.data
-    );
+    expect(getSlotFromStore('customer', state)).toMatchObject(state.customer.data);
 
     expect(getSlotFromStore('vendor', state)).toMatchObject(state.vendor.data);
 

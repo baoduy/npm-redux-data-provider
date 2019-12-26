@@ -1,10 +1,10 @@
 import {
   RdpActionsCollection,
   RdpConfig
-} from '../../src/redux-data-provider/RdpDefinition';
+} from '../src/RdpDefinition';
 
-import { bindAction } from '../../src/redux-data-provider/bindAction';
-import mergeActions from '../../src/redux-data-provider/mergeActions';
+import { bindAction } from '../src/bindAction';
+import mergeActions from '../src/mergeActions';
 
 describe('Test bindAction memorization', () => {
   test.skip('bindAction the same config and actions', () => {

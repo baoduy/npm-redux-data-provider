@@ -1,12 +1,13 @@
-import { AnyAction, Dispatch, bindActionCreators } from 'redux';
+import { AnyAction, Dispatch, bindActionCreators } from "redux";
 import {
   RdpActionsCollection,
   RdpConfig,
   RdpConfigItem,
   RequiredRdpActionsCollection
-} from './RdpDefinition';
+} from "./RdpDefinition";
 
-import { bindAction } from './bindAction';
+import { bindAction } from "./bindAction";
+import memoize from "lodash/memoize";
 
 //import memoize from 'lodash/memoize';
 
@@ -24,21 +25,17 @@ function mergeActionsAndBind<TConfig extends RdpConfig>(
 ): RequiredRdpActionsCollection<TConfig> {
   if (!config) return globalActions as RequiredRdpActionsCollection<TConfig>;
 
-  console.log('mergeActionsAndBind: ', bindGlobalAction);
+  console.log("RDP: mergeActionsAndBind: ", bindGlobalAction);
 
   const finalActions: any =
-    bindGlobalAction && globalActions
-      ? bindAction(globalActions, dispatch)
-      : { ...globalActions };
+    bindGlobalAction && globalActions ? bindAction(globalActions, dispatch) : { ...globalActions };
 
   Object.keys(config).forEach(k => {
-    if (typeof config[k] === 'boolean') return;
+    if (typeof config[k] === "boolean") return;
     const { name, actions } = config[k] as RdpConfigItem;
     if (!actions) return;
 
-    const bindAct = dispatch
-      ? bindActionCreators(actions as any, dispatch)
-      : actions;
+    const bindAct = dispatch ? bindActionCreators(actions as any, dispatch) : actions;
     const hasKeyInGlobal = globalActions && globalActions.hasOwnProperty(k);
 
     if (hasKeyInGlobal && name) {
@@ -49,5 +46,5 @@ function mergeActionsAndBind<TConfig extends RdpConfig>(
   return finalActions as RequiredRdpActionsCollection<TConfig>;
 }
 
-//export default memoize(mergeActions, (c, a) => ({ c, a }));
-export default mergeActionsAndBind;
+export default memoize(mergeActionsAndBind);
+//export default mergeActionsAndBind;
