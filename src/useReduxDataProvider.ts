@@ -1,12 +1,12 @@
-import { RdpActionsCollection, RdpConfig, RdpData } from "./RdpDefinition";
-import React, { useEffect } from "react";
-import { shallowEqual, useSelector, useStore } from "react-redux";
+import { RdpActionsCollection, RdpConfig, RdpData } from './RdpDefinition';
+import React, { useEffect } from 'react';
+import { shallowEqual, useSelector, useStore } from 'react-redux';
 
-import createConfigProvider from "./createConfigProvider";
-import getConfigFromProps from "./getConfigFromProps";
-import loadData from "./loadData";
-import mergeActions from "./mergeActions";
-import { useSafeState } from "@src/hooks/useSafeState";
+import createConfigProvider from './createConfigProvider';
+import getConfigFromProps from './getConfigFromProps';
+import loadData from './loadData';
+import mergeActions from './mergeActions';
+import { useSafeState } from '@src/useSafeState';
 
 export function useReduxDataProvider<TConfig extends RdpConfig>(
   config: TConfig,
@@ -25,12 +25,12 @@ export function useReduxDataProvider<TConfig extends RdpConfig>(
   useEffect(() => {
     if (loaded || loading || !allowLoadData) return;
 
-    console.info("1. useRDP: call API for ", config);
+    console.info('1. useRDP: call API for ', config);
     setLoading(true);
 
     loadData(finalConfig, data, finalActions)
       .then(() => {
-        console.warn("2. useRDP: Data Loaded for", config);
+        console.warn('2. useRDP: Data Loaded for', config);
         setLoading(false);
         setLoaded(true);
       })
