@@ -1,14 +1,17 @@
-import { NextComponentType, getDisplayName } from "next/dist/next-server/lib/utils";
-import { RdpActionsCollection, RdpConfig, RdpProps } from "./RdpDefinition";
+import { RdpActionsCollection, RdpConfig, RdpProps } from './RdpDefinition';
 
-import App from "next/app";
-import React from "react";
-import ReduxDataProvider from "./ReduxDataProvider";
-import { isDisable } from "./isDisable";
+import React from 'react';
+import ReduxDataProvider from './ReduxDataProvider';
+import { isDisable } from './isDisable';
 
-declare type ExtraProps = Partial<NextComponentType> & {
+declare type ExtraProps = {
   displayName?: string;
+  getInitialProps: (props: any) => Promise<any>;
 };
+
+function getDisplayName<TProps>(Component: React.ComponentType<TProps>) {
+  return Component.displayName || Component.name || 'NextComponent';
+}
 
 /**
  * The HOC for ReduxDataProvider for NextJs Pages
@@ -21,7 +24,7 @@ function WithNextRdp<TConfig extends RdpConfig, TProps = any>(
   return (Component: React.ComponentType<TProps> & ExtraProps) =>
     class extends React.Component<TProps & RdpProps<TConfig>> {
       static getInitialProps = Component.getInitialProps;
-      static displayName = `withNextReduxDataProvider(${getDisplayName(App)})`;
+      static displayName = `withNextReduxDataProvider(${getDisplayName(Component)})`;
 
       dataRender = (data: any) => {
         const { actions, children, disableRdp, ...rest } = this.props;
